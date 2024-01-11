@@ -1,0 +1,26 @@
+.accordion {
+    border-radius: 20px !important;
+    &:not(:last-child) {
+        margin-bottom: 12px;
+    }
+    &:first-child {
+        border-radius: 20px !important;
+    }
+    &:last-child {
+        border-radius: 20px !important;
+    }
+    &::before {
+        content: none !important;
+    }
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & > * {
+        &:not(:last-child) {
+            margin-right: 4px;
+        }
+    }
+}

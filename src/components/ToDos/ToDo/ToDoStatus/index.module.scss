@@ -1,0 +1,36 @@
+.select {
+    border-radius: 20px;
+    > div {
+        padding: 0;
+        padding-right: 0 !important;
+    }
+    > svg {
+        fill: white;
+        transition: transform 0.3s;
+    }
+}
+
+.value {
+    padding: 8px 12px;
+    padding-right: 32px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    color: white;
+    border-radius: 20px;
+    &-awaiting {
+        background-color: rgb(63, 63, 63);
+    }
+    &-process {
+        background-color: rgb(0, 38, 162);
+    }
+    &-done {
+        background-color: rgb(0, 103, 29);
+    }
+}
+
+.select_menu {
+    border-radius: 20px;
+    &:global(.MuiBackdrop-root) {
+        background-color: red;
+    }
+}
