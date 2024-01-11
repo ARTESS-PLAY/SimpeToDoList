@@ -26,7 +26,8 @@ const Todo = ({ todo }: { todo: TodoT }) => {
     };
 
     return (
-        <Accordion className={cl.accordion}>
+        <Accordion
+            className={cl.accordion + (todo.status === 'DONE' ? ' ' + cl['accordion-done'] : '')}>
             <AccordionSummary className={cl.accordion__head}>
                 <Typography>{todo.name}</Typography>
                 <div className={cl.controls}>

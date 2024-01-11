@@ -1,5 +1,6 @@
 .accordion {
     border-radius: 20px !important;
+    transition: background-color 0.3s;
     &:not(:last-child) {
         margin-bottom: 12px;
     }
@@ -11,6 +12,30 @@
     }
     &::before {
         content: none !important;
+    }
+    &__head p {
+        position: relative;
+        transition: opacity 0.3s;
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 1px;
+            background-color: black;
+            transition: width 0.3s;
+        }
+    }
+    &-done {
+        background-color: rgba(192, 192, 192, 0.858);
+        .accordion__head p {
+            opacity: 0.8;
+            &::before {
+                width: 100%;
+            }
+        }
     }
 }
 
