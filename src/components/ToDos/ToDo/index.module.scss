@@ -13,19 +13,34 @@
     &::before {
         content: none !important;
     }
-    &__head p {
-        position: relative;
-        transition: opacity 0.3s;
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 1px;
-            background-color: black;
-            transition: width 0.3s;
+    &__head {
+        :global(.MuiAccordionSummary-content) {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            @media (max-width: 767px) {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+            }
+        }
+        p {
+            position: relative;
+            transition: opacity 0.3s;
+            @media (max-width: 767px) {
+                margin-top: 16px;
+            }
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 0;
+                height: 1px;
+                background-color: black;
+                transition: width 0.3s;
+            }
         }
     }
     &-done {
@@ -43,9 +58,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    @media (max-width: 767px) {
+        width: 100%;
+    }
     & > * {
         &:not(:last-child) {
             margin-right: 4px;
         }
     }
+}
+.edit,
+.delete {
+    fill: var(--main-color) !important;
 }

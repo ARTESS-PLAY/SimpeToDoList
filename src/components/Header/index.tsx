@@ -8,10 +8,12 @@ const Header = () => {
 
     return (
         <header className={cl.header}>
-            <h1>Pan0mera's toDo lists</h1>
-            <Button variant="text" onClick={modalOpenCreate}>
-                <AddCircleOutlineOutlinedIcon /> Добавить
-            </Button>
+            <div className={cl.header__content}>
+                <h1>Pan0mera's toDo lists</h1>
+                <Button variant="text" onClick={modalOpenCreate} className={cl.header__button}>
+                    <AddCircleOutlineOutlinedIcon /> Добавить
+                </Button>
+            </div>
         </header>
     );
 };

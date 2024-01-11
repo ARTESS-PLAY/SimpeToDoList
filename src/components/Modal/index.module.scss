@@ -27,6 +27,9 @@
         :global(.MuiInputBase-root) {
             border-radius: 16px !important;
         }
+        :global(label.Mui-focused) {
+            color: var(--main-color) !important;
+        }
     }
     &_textarea {
         margin-bottom: 16px !important;
@@ -34,16 +37,21 @@
         :global(.MuiInputBase-root) {
             border-radius: 16px !important;
         }
+        :global(label.Mui-focused) {
+            color: var(--main-color) !important;
+        }
     }
     &_button {
         margin-top: 16px !important;
         display: block;
         border-radius: 16px !important;
+        background-color: var(--main-color) !important;
     }
     &_close {
         position: absolute;
         right: 16px;
         top: 16px;
         cursor: pointer;
+        fill: var(--main-color) !important;
     }
 }

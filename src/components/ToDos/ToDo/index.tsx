@@ -1,4 +1,4 @@
-import { Accordion, Typography, AccordionDetails, styled } from '@mui/material';
+import { Accordion, Typography, AccordionDetails, styled, AccordionSummary } from '@mui/material';
 import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
 import ToDoStatus from './ToDoStatus';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,17 +7,6 @@ import cl from './index.module.scss';
 import { Todo as TodoT, TodoStatus } from '../../../models/Todo/types';
 import { useToDoContext } from '../../../contexts/ToDoContext/ToDoContext';
 import { useAppContext } from '../../../contexts/AppContext/AppContext';
-
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-    <MuiAccordionSummary {...props} />
-))(() => ({
-    '& .MuiAccordionSummary-content': {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-}));
 
 const Todo = ({ todo }: { todo: TodoT }) => {
     const { changeStatus, removeToDo } = useToDoContext();
@@ -46,10 +35,10 @@ const Todo = ({ todo }: { todo: TodoT }) => {
                 <div className={cl.controls}>
                     <ToDoStatus status={todo.status} handleChangeStatus={handleChange} />
                     <span onClick={handleClickEdit}>
-                        <EditIcon />
+                        <EditIcon className={cl.edit} />
                     </span>
                     <span onClick={handleClickDelete}>
-                        <DeleteIcon />
+                        <DeleteIcon className={cl.delete} />
                     </span>
                 </div>
             </AccordionSummary>

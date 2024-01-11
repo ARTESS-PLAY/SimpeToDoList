@@ -1,5 +1,8 @@
 .select {
     border-radius: 20px;
+    @media (max-width: 767px) {
+        flex-grow: 1;
+    }
     > div {
         padding: 0;
         padding-right: 0 !important;

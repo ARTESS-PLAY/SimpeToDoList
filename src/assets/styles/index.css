@@ -7,6 +7,26 @@
     padding: 0;
 }
 
+:root {
+    --main-color: #999bec;
+    --second-color: #b49aed;
+    --additional-color-1: #9ad0ed;
+    --additional-color-2: #cf9aed;
+    --additional-color-3: #9ab6ed;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: var(--main-color) !important;
+}
+
+body {
+    background-image: url('../img/main_bg.webp');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .container {
     width: 100%;
     max-width: 1064px;
