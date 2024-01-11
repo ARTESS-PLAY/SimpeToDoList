@@ -20,7 +20,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 }));
 
 const Todo = ({ todo }: { todo: TodoT }) => {
-    const { changeStatus } = useToDoContext();
+    const { changeStatus, removeToDo } = useToDoContext();
     const { modalOpenEdit } = useAppContext();
 
     const handleChange = (newStatus: TodoStatus) => {
@@ -30,6 +30,12 @@ const Todo = ({ todo }: { todo: TodoT }) => {
     const handleClickEdit = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         e.stopPropagation();
         modalOpenEdit(todo);
+    };
+
+    const handleClickDelete = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        e.stopPropagation();
+        const res = window.confirm('Вы уверены, что хотите удалить задачу?');
+        if (res) removeToDo(todo.id);
     };
 
     return (
@@ -42,7 +48,9 @@ const Todo = ({ todo }: { todo: TodoT }) => {
                     <span onClick={handleClickEdit}>
                         <EditIcon />
                     </span>
-                    <DeleteIcon />
+                    <span onClick={handleClickDelete}>
+                        <DeleteIcon />
+                    </span>
                 </div>
             </AccordionSummary>
             <AccordionDetails>

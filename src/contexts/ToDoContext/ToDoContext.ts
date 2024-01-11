@@ -6,6 +6,7 @@ interface ToDoContextInitial {
     addToDo: (todo: Todo) => void;
     changeStatus: (todoId: string, newStatus: TodoStatus) => void;
     updateToDo: (todoId: string, name: string, desc: string, status: TodoStatus) => void;
+    removeToDo: (todoId: string) => void;
 }
 
 //контекст для тудушек
@@ -46,6 +47,10 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
         [todos],
     );
 
+    const removeToDo = useCallback((todoId: string) => {
+        setTodos((prev) => prev.filter((t) => t.id !== todoId));
+    }, []);
+
     const changeStatus = useCallback(
         (todoId: string, newStatus: TodoStatus) => {
             const todo = todos.find((t) => t.id === todoId);
@@ -69,5 +74,6 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
         addToDo,
         changeStatus,
         updateToDo,
+        removeToDo,
     };
 };
