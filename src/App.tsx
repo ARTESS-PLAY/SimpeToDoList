@@ -3,33 +3,24 @@ import Header from './components/Header';
 import ToDos from './components/ToDos';
 import Modal from './components/Modal';
 import { CSSTransition } from 'react-transition-group';
+import { useAppContext } from './contexts/AppContext/AppContext';
 
 function App() {
-    const modalRef = useRef(null);
-    const [isModalShow, setIsModalShow] = useState(false);
-
-    const handleCloseModal = () => {
-        console.log('CLOSE');
-        setIsModalShow(false);
-    };
-    const handleOpenModal = () => {
-        console.log('OPEN');
-        setIsModalShow(true);
-    };
+    const { modalRef, isModalOpen } = useAppContext();
 
     return (
         <div className="App">
             <div className="container">
-                <Header handleOpenModal={handleOpenModal} />
+                <Header />
                 <ToDos />
 
                 <CSSTransition
                     nodeRef={modalRef}
-                    in={isModalShow}
+                    in={isModalOpen}
                     timeout={300}
                     classNames="fade"
                     unmountOnExit>
-                    <Modal modalRef={modalRef} handleClose={handleCloseModal} />
+                    <Modal />
                 </CSSTransition>
             </div>
         </div>

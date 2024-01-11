@@ -4,21 +4,19 @@ import { useState } from 'react';
 import ToDoStatus from '../ToDos/ToDo/ToDoStatus';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
+import { useAppContext } from '../../contexts/AppContext/AppContext';
 
-interface ModalProps {
-    modalRef: React.RefObject<HTMLDivElement>;
-    handleClose: () => void;
-}
-
-const Modal = ({ modalRef, handleClose }: ModalProps) => {
+const Modal = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
+    const { modalClose, modalRef } = useAppContext();
+
     return (
-        <div className={cl.modal} ref={modalRef} onClick={handleClose}>
+        <div className={cl.modal} ref={modalRef} onClick={modalClose}>
             <div className={cl.modal_content} onClick={(e) => e.stopPropagation()}>
                 <p className={cl.modal_title}>Создать задачу</p>
-                <div onClick={handleClose}>
+                <div onClick={modalClose}>
                     <CloseIcon className={cl.modal_close} />
                 </div>
                 <TextField
