@@ -5,6 +5,7 @@ interface ToDoContextInitial {
     todos: Todo[];
     addToDo: (todo: Todo) => void;
     changeStatus: (todoId: string, newStatus: TodoStatus) => void;
+    updateToDo: (todoId: string, name: string, desc: string, status: TodoStatus) => void;
 }
 
 //контекст для тудушек
@@ -26,13 +27,28 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
         setTodos((prev) => [...prev, todo]);
     }, []);
 
+    const updateToDo = useCallback(
+        (todoId: string, name: string, desc: string, status: TodoStatus) => {
+            const finded = todos.find((t) => t.id === todoId);
+            if (!finded) throw new Error('Задача не найдена');
+
+            finded.name = name;
+            finded.description = desc;
+            finded.status = status;
+
+            setTodos((prev) => {
+                return prev.map((t) => {
+                    if (t.id !== todoId) return t;
+                    return finded;
+                });
+            });
+        },
+        [todos],
+    );
+
     const changeStatus = useCallback(
         (todoId: string, newStatus: TodoStatus) => {
-            const todo = todos.find((t) => {
-                console.log(t.id);
-                return t.id === todoId;
-            });
-            console.log(todoId);
+            const todo = todos.find((t) => t.id === todoId);
 
             if (!todo) throw new Error('Такой задачи нет');
 
@@ -52,5 +68,6 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
         todos,
         addToDo,
         changeStatus,
+        updateToDo,
     };
 };

@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import cl from './index.module.scss';
 import { Todo as TodoT, TodoStatus } from '../../../models/Todo/types';
 import { useToDoContext } from '../../../contexts/ToDoContext/ToDoContext';
+import { useAppContext } from '../../../contexts/AppContext/AppContext';
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
     <MuiAccordionSummary {...props} />
@@ -20,9 +21,15 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 
 const Todo = ({ todo }: { todo: TodoT }) => {
     const { changeStatus } = useToDoContext();
+    const { modalOpenEdit } = useAppContext();
 
     const handleChange = (newStatus: TodoStatus) => {
         changeStatus(todo.id, newStatus);
+    };
+
+    const handleClickEdit = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        e.stopPropagation();
+        modalOpenEdit(todo);
     };
 
     return (
@@ -32,7 +39,9 @@ const Todo = ({ todo }: { todo: TodoT }) => {
                 <Typography>{todo.name}</Typography>
                 <div className={cl.controls}>
                     <ToDoStatus status={todo.status} handleChangeStatus={handleChange} />
-                    <EditIcon />
+                    <span onClick={handleClickEdit}>
+                        <EditIcon />
+                    </span>
                     <DeleteIcon />
                 </div>
             </AccordionSummary>

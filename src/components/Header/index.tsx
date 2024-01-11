@@ -4,12 +4,12 @@ import cl from './index.module.scss';
 import { useAppContext } from '../../contexts/AppContext/AppContext';
 
 const Header = () => {
-    const { modalOpen } = useAppContext();
+    const { modalOpenCreate } = useAppContext();
 
     return (
         <header className={cl.header}>
             <h1>Pan0mera's toDo lists</h1>
-            <Button variant="text" onClick={modalOpen}>
+            <Button variant="text" onClick={modalOpenCreate}>
                 <AddCircleOutlineOutlinedIcon /> Добавить
             </Button>
         </header>

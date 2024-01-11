@@ -10,12 +10,22 @@ import { createToDo } from '../../models/Todo/utils';
 import { TodoStatus } from '../../models/Todo/types';
 
 const Modal = () => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [status, setStatus] = useState<TodoStatus>('AWAITING');
+    const { modalClose, modalRef, modalEditable, modalRole } = useAppContext();
+    const { addToDo, updateToDo } = useToDoContext();
 
-    const { modalClose, modalRef } = useAppContext();
-    const { addToDo } = useToDoContext();
+    let initTitle = '';
+    let initDesc = '';
+    let initStatus: TodoStatus = 'AWAITING';
+
+    if (modalRole === 'EDIT') {
+        initTitle = modalEditable.name;
+        initDesc = modalEditable.description;
+        initStatus = modalEditable.status;
+    }
+
+    const [title, setTitle] = useState(initTitle);
+    const [description, setDescription] = useState(initDesc);
+    const [status, setStatus] = useState<TodoStatus>(initStatus);
 
     const handleChangeStatus = (status: TodoStatus) => {
         setStatus(status);
@@ -36,10 +46,26 @@ const Modal = () => {
         modalClose();
     };
 
+    const handleUpdateToDo = () => {
+        if (title.length < 1) {
+            alert('Название должно присутсвовать!');
+            return;
+        }
+        if (description.length < 1) {
+            alert('Описание должно присутсвовать!');
+            return;
+        }
+
+        updateToDo(modalEditable.id, title, description, status);
+        modalClose();
+    };
+
     return (
         <div className={cl.modal} ref={modalRef} onClick={modalClose}>
             <div className={cl.modal_content} onClick={(e) => e.stopPropagation()}>
-                <p className={cl.modal_title}>Создать задачу</p>
+                <p className={cl.modal_title}>
+                    {modalRole === 'CREATE' ? 'Создать задачу' : 'Редактировать задачу'}
+                </p>
                 <div onClick={modalClose}>
                     <CloseIcon className={cl.modal_close} />
                 </div>
@@ -64,8 +90,8 @@ const Modal = () => {
                     variant="contained"
                     fullWidth
                     className={cl.modal_button}
-                    onClick={handleCreateToDo}>
-                    Создать
+                    onClick={modalRole === 'CREATE' ? handleCreateToDo : handleUpdateToDo}>
+                    {modalRole === 'CREATE' ? 'Создать' : 'Сохранить'}
                 </Button>
             </div>
         </div>
