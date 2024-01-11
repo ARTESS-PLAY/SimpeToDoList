@@ -5,12 +5,36 @@ import ToDoStatus from '../ToDos/ToDo/ToDoStatus';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppContext } from '../../contexts/AppContext/AppContext';
+import { useToDoContext } from '../../contexts/ToDoContext/ToDoContext';
+import { createToDo } from '../../models/Todo/utils';
+import { TodoStatus } from '../../models/Todo/types';
 
 const Modal = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [status, setStatus] = useState<TodoStatus>('AWAITING');
 
     const { modalClose, modalRef } = useAppContext();
+    const { addToDo } = useToDoContext();
+
+    const handleChangeStatus = (status: TodoStatus) => {
+        setStatus(status);
+    };
+
+    const handleCreateToDo = () => {
+        if (title.length < 1) {
+            alert('Название должно присутсвовать!');
+            return;
+        }
+        if (description.length < 1) {
+            alert('Описание должно присутсвовать!');
+            return;
+        }
+
+        const newToDo = createToDo(title, description, status);
+        addToDo(newToDo);
+        modalClose();
+    };
 
     return (
         <div className={cl.modal} ref={modalRef} onClick={modalClose}>
@@ -35,8 +59,12 @@ const Modal = () => {
                     className={cl.modal_textarea}
                     rows={4}
                 />
-                <ToDoStatus status="AWAITING" />
-                <Button variant="contained" fullWidth className={cl.modal_button}>
+                <ToDoStatus status={status} handleChangeStatus={handleChangeStatus} />
+                <Button
+                    variant="contained"
+                    fullWidth
+                    className={cl.modal_button}
+                    onClick={handleCreateToDo}>
                     Создать
                 </Button>
             </div>

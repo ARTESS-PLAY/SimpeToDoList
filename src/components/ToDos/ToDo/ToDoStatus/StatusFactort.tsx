@@ -3,16 +3,28 @@ import { TodoStatus } from '../../../../models/Todo/types';
 import { ReactNode } from 'react';
 import cl from './index.module.scss';
 
-export const statusFactory = (status: TodoStatus): JSX.Element => {
+export const statusFactory = (status: TodoStatus, key: string | number): JSX.Element => {
     switch (status) {
         case 'AWAITING':
-            return <MenuItem value={'AWAITING'}>Ожидает выполнения</MenuItem>;
+            return (
+                <MenuItem value={'AWAITING'} key={key}>
+                    Ожидает выполнения
+                </MenuItem>
+            );
 
         case 'IN PROCESS':
-            return <MenuItem value={'IN PROCESS'}>В процессе</MenuItem>;
+            return (
+                <MenuItem value={'IN PROCESS'} key={key}>
+                    В процессе
+                </MenuItem>
+            );
 
         case 'DONE':
-            return <MenuItem value={'DONE'}>Сделано</MenuItem>;
+            return (
+                <MenuItem value={'DONE'} key={key}>
+                    Сделано
+                </MenuItem>
+            );
 
         default:
             const neverCheck: never = status;

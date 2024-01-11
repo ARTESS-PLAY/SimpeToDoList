@@ -4,6 +4,8 @@ import ToDoStatus from './ToDoStatus';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import cl from './index.module.scss';
+import { Todo as TodoT, TodoStatus } from '../../../models/Todo/types';
+import { useToDoContext } from '../../../contexts/ToDoContext/ToDoContext';
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
     <MuiAccordionSummary {...props} />
@@ -16,22 +18,25 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     },
 }));
 
-const Todo = () => {
+const Todo = ({ todo }: { todo: TodoT }) => {
+    const { changeStatus } = useToDoContext();
+
+    const handleChange = (newStatus: TodoStatus) => {
+        changeStatus(todo.id, newStatus);
+    };
+
     return (
         <Accordion className={cl.accordion}>
             <AccordionSummary className={cl.accordion__head}>
-                <Typography>Accordion 1</Typography>
+                <Typography>{todo.name}</Typography>
                 <div className={cl.controls}>
-                    <ToDoStatus status="AWAITING" />
+                    <ToDoStatus status={todo.status} handleChangeStatus={handleChange} />
                     <EditIcon />
                     <DeleteIcon />
                 </div>
             </AccordionSummary>
             <AccordionDetails>
-                <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-                    lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
+                <Typography>{todo.description}</Typography>
             </AccordionDetails>
         </Accordion>
     );

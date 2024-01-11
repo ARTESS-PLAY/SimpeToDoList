@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { Todo } from '../../models/Todo/types';
+import { Todo, TodoStatus } from '../../models/Todo/types';
 
 interface ToDoContextInitial {
     todos: Todo[];
+    addToDo: (todo: Todo) => void;
+    changeStatus: (todoId: string, newStatus: TodoStatus) => void;
 }
 
 //контекст для тудушек
@@ -20,7 +22,27 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
     //тудушки
     const [todos, setTodos] = useState<Todo[]>([]);
 
+    const addToDo = useCallback((todo: Todo) => {
+        setTodos((prev) => [...prev, todo]);
+    }, []);
+
+    const changeStatus = useCallback((todoId: string, newStatus: TodoStatus) => {
+        const todo = todos.find((t) => t.id === todoId);
+        if (!todo) throw new Error('Такой задачи нет');
+
+        todo.status = newStatus;
+
+        setTodos((prev) => {
+            return prev.map((el) => {
+                if (el.id !== todoId) return el;
+                return todo;
+            });
+        });
+    }, []);
+
     return {
         todos,
+        addToDo,
+        changeStatus,
     };
 };

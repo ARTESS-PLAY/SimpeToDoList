@@ -6,17 +6,21 @@ import cl from './index.module.scss';
 
 const allStatuses: TodoStatus[] = ['AWAITING', 'IN PROCESS', 'DONE'];
 
-const ToDoStatus = ({ status }: { status: TodoStatus }): JSX.Element => {
-    const [age, setAge] = useState<TodoStatus>(status);
-
+const ToDoStatus = ({
+    status,
+    handleChangeStatus,
+}: {
+    status: TodoStatus;
+    handleChangeStatus: (status: TodoStatus) => void;
+}): JSX.Element => {
     const handleChange = (e: SelectChangeEvent<TodoStatus>) => {
         const newStatus = e.target.value as TodoStatus;
-        setAge(newStatus);
+        handleChangeStatus(newStatus);
     };
 
     return (
         <Select
-            value={age}
+            value={status}
             MenuProps={{
                 PaperProps: {
                     className: cl.select_menu,
@@ -33,7 +37,7 @@ const ToDoStatus = ({ status }: { status: TodoStatus }): JSX.Element => {
             }}
             className={cl.select}
             renderValue={renderStatusValue}>
-            {allStatuses.map((status) => statusFactory(status))}
+            {allStatuses.map((status, i) => statusFactory(status, i))}
         </Select>
     );
 };
