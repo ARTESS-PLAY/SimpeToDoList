@@ -26,19 +26,27 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
         setTodos((prev) => [...prev, todo]);
     }, []);
 
-    const changeStatus = useCallback((todoId: string, newStatus: TodoStatus) => {
-        const todo = todos.find((t) => t.id === todoId);
-        if (!todo) throw new Error('Такой задачи нет');
-
-        todo.status = newStatus;
-
-        setTodos((prev) => {
-            return prev.map((el) => {
-                if (el.id !== todoId) return el;
-                return todo;
+    const changeStatus = useCallback(
+        (todoId: string, newStatus: TodoStatus) => {
+            const todo = todos.find((t) => {
+                console.log(t.id);
+                return t.id === todoId;
             });
-        });
-    }, []);
+            console.log(todoId);
+
+            if (!todo) throw new Error('Такой задачи нет');
+
+            todo.status = newStatus;
+
+            setTodos((prev) => {
+                return prev.map((el) => {
+                    if (el.id !== todoId) return el;
+                    return todo;
+                });
+            });
+        },
+        [todos],
+    );
 
     return {
         todos,
