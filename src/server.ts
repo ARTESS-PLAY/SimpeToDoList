@@ -26,3 +26,7 @@ app.listen(config.port, () => {
 /* CONFIGURATE APP END*/
 
 app.post('/api/todos/', todoValidator);
+app.get('/api/todos/');
+app.get('/api/todos/:id');
+app.delete('/api/todos/:id');
+app.patch('/api/todos/:id');
