@@ -1,0 +1,49 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 120vh;
+    background-color: rgba(51, 51, 51, 0.421);
+    &_content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        width: calc(100vw - 40px);
+        max-width: 1024px;
+    }
+    &_title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+    &_text_title {
+        margin-bottom: 16px !important;
+        :global(.MuiInputBase-root) {
+            border-radius: 16px !important;
+        }
+    }
+    &_textarea {
+        margin-bottom: 16px !important;
+        border-radius: 16px;
+        :global(.MuiInputBase-root) {
+            border-radius: 16px !important;
+        }
+    }
+    &_button {
+        margin-top: 16px !important;
+        display: block;
+        border-radius: 16px !important;
+    }
+    &_close {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        cursor: pointer;
+    }
+}
