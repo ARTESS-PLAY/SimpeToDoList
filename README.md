@@ -1,4 +1,4 @@
-![Пример](https://ibb.co/DW4pgcD)
+![Пример](https://github.com/ARTESS-PLAY/SimpeToDoList/blob/main/sample.png)
 # SimpeToDoList
 В Ветке "frontend" находятся все иходники UI
 В Ветке "server" находятся все исходники для запуска сервера
