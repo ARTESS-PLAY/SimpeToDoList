@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator';
 import TodoModel from '../models/Todo';
 import { Request, Response } from 'express';
 
