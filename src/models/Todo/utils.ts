@@ -1,20 +1,23 @@
-import { useId } from 'react';
 import { Todo, TodoStatus } from './types';
-import { uuidv4 } from '../../share/helpers';
 
-export const createToDo = (name: string, desc: string, status: TodoStatus): Todo => {
-    if (name.length < 1) throw new Error('Название не должно быть меньше 1 символа!');
+export interface BackEndToDo {
+    createdAt: string;
+    description: string;
+    name: string;
+    status: TodoStatus;
+    updatedAt: string;
+    _id: string;
+}
 
-    if (desc.length < 1) throw new Error('Описание не должно быть меньше 1 символа!');
-
-    const timeNow = Date.now();
-    const id = uuidv4();
-
-    return {
-        id: id,
-        name: name,
-        description: desc,
-        status: status,
-        createAt: timeNow,
+export const convertTodoFromBackend = (data: BackEndToDo): Todo => {
+    const todo = {
+        id: data._id,
+        createdAt: data.createdAt,
+        description: data.description,
+        name: data.name,
+        status: data.status,
+        updatedAt: data.updatedAt,
     };
+
+    return todo;
 };

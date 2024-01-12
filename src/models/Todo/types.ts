@@ -3,7 +3,8 @@ export interface Todo {
     name: string;
     description: string;
     status: TodoStatus;
-    createAt: number;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export type TodoStatus = 'AWAITING' | 'IN PROCESS' | 'DONE';

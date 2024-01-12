@@ -6,12 +6,14 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppContext } from '../../contexts/AppContext/AppContext';
 import { useToDoContext } from '../../contexts/ToDoContext/ToDoContext';
-import { createToDo } from '../../models/Todo/utils';
 import { TodoStatus } from '../../models/Todo/types';
+import todoApi from '../../api/TodoApi';
+import { convertTodoFromBackend } from '../../models/Todo/utils';
 
 const Modal = () => {
     const { modalClose, modalRef, modalEditable, modalRole } = useAppContext();
     const { addToDo, updateToDo } = useToDoContext();
+    const [isLoading, setIsLoading] = useState(false);
 
     let initTitle = '';
     let initDesc = '';
@@ -31,7 +33,7 @@ const Modal = () => {
         setStatus(status);
     };
 
-    const handleCreateToDo = () => {
+    const handleCreateToDo = async () => {
         if (title.length < 1) {
             alert('Название должно присутсвовать!');
             return;
@@ -41,12 +43,21 @@ const Modal = () => {
             return;
         }
 
-        const newToDo = createToDo(title, description, status);
-        addToDo(newToDo);
-        modalClose();
+        setIsLoading(true);
+        const res = await todoApi.createTodo({
+            name: title,
+            description,
+            status,
+        });
+        if (res) {
+            const converted = convertTodoFromBackend(res.data.createTodo);
+            addToDo(converted);
+            modalClose();
+        }
+        setIsLoading(false);
     };
 
-    const handleUpdateToDo = () => {
+    const handleUpdateToDo = async () => {
         if (title.length < 1) {
             alert('Название должно присутсвовать!');
             return;
@@ -56,8 +67,27 @@ const Modal = () => {
             return;
         }
 
-        updateToDo(modalEditable.id, title, description, status);
-        modalClose();
+        setIsLoading(true);
+        const send = {
+            name: title,
+            description,
+            status,
+        };
+
+        const res = await todoApi.updateTodo(modalEditable.id, send);
+        if (res && res.success) {
+            updateToDo(modalEditable.id, {
+                ...modalEditable,
+                name: title,
+                description,
+                status,
+            });
+            modalClose();
+        } else {
+            console.log(res);
+        }
+
+        setIsLoading(false);
     };
 
     return (
@@ -91,7 +121,7 @@ const Modal = () => {
                     fullWidth
                     className={cl.modal_button}
                     onClick={modalRole === 'CREATE' ? handleCreateToDo : handleUpdateToDo}>
-                    {modalRole === 'CREATE' ? 'Создать' : 'Сохранить'}
+                    {isLoading ? 'Сохранение...' : modalRole === 'CREATE' ? 'Создать' : 'Сохранить'}
                 </Button>
             </div>
         </div>
