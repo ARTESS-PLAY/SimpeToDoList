@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
 
-const TodoSchema = new mongoose.Schema(
+interface Todo {
+    name: string;
+    description: string;
+    status: 'AWAITING' | 'IN PROCESS' | 'DONE';
+}
+
+const TodoSchema = new mongoose.Schema<Todo>(
     {
         name: {
             type: String,

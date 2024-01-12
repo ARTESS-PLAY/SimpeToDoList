@@ -4,6 +4,14 @@ import { todoValidator } from './validations/todosValidation';
 
 import cors from 'cors';
 import config from './serverConfig.json';
+import {
+    createToDo,
+    getAllTodos,
+    getTodo,
+    removeTodo,
+    updateTodo,
+} from './controllers/TodoController';
+import handleValidationErrors from './utils/handleValidationErrors';
 
 /* DATABASE CONNECT */
 
@@ -25,8 +33,8 @@ app.listen(config.port, () => {
 });
 /* CONFIGURATE APP END*/
 
-app.post('/api/todos/', todoValidator);
-app.get('/api/todos/');
-app.get('/api/todos/:id');
-app.delete('/api/todos/:id');
-app.patch('/api/todos/:id');
+app.get('/api/todos/', getAllTodos);
+app.get('/api/todos/:id', getTodo);
+app.post('/api/todos/', todoValidator, handleValidationErrors, createToDo);
+app.delete('/api/todos/:id', removeTodo);
+app.patch('/api/todos/:id', todoValidator, handleValidationErrors, updateTodo);
