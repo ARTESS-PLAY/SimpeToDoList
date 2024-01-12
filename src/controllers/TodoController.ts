@@ -34,13 +34,8 @@ export const getAllTodos = async (req: Request, res: Response) => {
 export const getTodo = async (req: Request, res: Response) => {
     try {
         const todoId = req.params.id;
-        await TodoModel.findById(todoId, (err, doc) => {
-            if (err) return res.status(500).json(err);
-
-            if (!doc) return res.status(404).json({ message: 'Задача не найдена' });
-
-            res.json(doc);
-        });
+        const todo = await TodoModel.findById(todoId);
+        res.json(todo);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -49,13 +44,9 @@ export const getTodo = async (req: Request, res: Response) => {
 export const removeTodo = async (req: Request, res: Response) => {
     try {
         const todoId = req.params.id;
-        await TodoModel.findByIdAndDelete(todoId, (err, doc) => {
-            if (err) return res.status(500).json(err);
+        await TodoModel.findByIdAndDelete(todoId);
 
-            if (!doc) return res.status(404).json({ message: 'Задача не найдена' });
-
-            res.json({ success: true });
-        });
+        res.json({ success: true });
     } catch (error) {
         res.status(500).json(error);
     }
@@ -64,7 +55,7 @@ export const removeTodo = async (req: Request, res: Response) => {
 export const updateTodo = async (req: Request, res: Response) => {
     try {
         const todoId = req.params.id;
-        await TodoModel.findByIdAndDelete(todoId, {
+        const todo = await TodoModel.findByIdAndUpdate(todoId, {
             name: req.body.name,
             description: req.body.description,
             status: req.body.status,
