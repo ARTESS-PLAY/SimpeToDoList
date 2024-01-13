@@ -7,9 +7,10 @@ import { useAppContext } from './contexts/AppContext/AppContext';
 import todoApi from './api/TodoApi';
 import { useToDoContext } from './contexts/ToDoContext/ToDoContext';
 import { convertTodoFromBackend } from './models/Todo/utils';
+import LoginForm from './components/auth/LoginForm';
 
 function App() {
-    const { modalRef, isModalOpen } = useAppContext();
+    const { modalRef, isModalOpen, currentUser } = useAppContext();
     const { addToDos } = useToDoContext();
 
     useEffect(() => {
@@ -22,6 +23,10 @@ function App() {
         };
         fetch();
     }, []);
+
+    if (!currentUser) {
+        return <LoginForm />;
+    }
 
     return (
         <div className="App">

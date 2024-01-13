@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Todo } from '../../models/Todo/types';
+import { User } from '../../models/User/types';
 
 export type ModalRole = 'CREATE' | 'EDIT';
 
@@ -11,6 +12,9 @@ interface AppContextInitial {
     modalRef: React.RefObject<HTMLDivElement>;
     modalRole: ModalRole;
     modalEditable: Todo;
+    currentUser: User | null;
+    authUser: (token: string) => void;
+    logout: () => void;
 }
 
 //главный контекст
@@ -29,7 +33,24 @@ export const useCreateAppContext = (): AppContextInitial => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalRole, setModalRole] = useState<ModalRole>('CREATE');
     const [modalEditable, setModalEditable] = useState<Todo>({} as Todo);
+    //текущий пользователь
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const modalRef = useRef(null);
+
+    //авторизирует пользователя
+    const authUser = (token: string) => {
+        const payload = token.split('.')[1];
+        const data = JSON.parse(atob(payload));
+
+        const currentUser: User = {
+            token,
+            login: data.login,
+        };
+        setCurrentUser(currentUser);
+    };
+
+    //деавторизирует пользователя
+    const logout = () => setCurrentUser(null);
 
     const modalClose = useCallback(() => setIsModalOpen(false), []);
     const modalOpenCreate = useCallback(() => {
@@ -50,5 +71,8 @@ export const useCreateAppContext = (): AppContextInitial => {
         modalOpenEdit,
         modalRef,
         modalRole,
+        currentUser,
+        authUser,
+        logout,
     };
 };
