@@ -22,7 +22,10 @@ mongoose
     .then(() => {
         console.log('connect to db');
     })
-    .catch((err) => console.log(`DB error ${err} h`));
+    .catch((err) => {
+        console.log(`DB error ${err}`);
+        console.log(config.mongodbURL);
+    });
 
 /* DATABASE END */
 
