@@ -8,6 +8,7 @@ interface ToDoContextInitial {
     updateToDo: (todoId: string, todo: Todo) => void;
     removeToDo: (todoId: string) => void;
     addToDos: (todos: Todo[]) => void;
+    isFirtsRender: boolean;
 }
 
 //контекст для тудушек
@@ -24,6 +25,7 @@ export function useToDoContext() {
 export const useCreateToDoContext = (): ToDoContextInitial => {
     //тудушки
     const [todos, setTodos] = useState<Todo[]>([]);
+    const [isFirtsRender, setIsFirtsRender] = useState(true);
 
     const addToDo = useCallback((todo: Todo) => {
         setTodos((prev) => [todo, ...prev]);
@@ -31,6 +33,7 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
 
     const addToDos = useCallback((todos: Todo[]) => {
         setTodos(todos);
+        setIsFirtsRender(false);
     }, []);
 
     const updateToDo = useCallback(
@@ -77,5 +80,6 @@ export const useCreateToDoContext = (): ToDoContextInitial => {
         updateToDo,
         removeToDo,
         addToDos,
+        isFirtsRender,
     };
 };

@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Todo } from '../../models/Todo/types';
 import { User } from '../../models/User/types';
+import todoApi from '../../api/TodoApi';
+import { deleteCookie, setCookie } from '../../share/cookie';
 
 export type ModalRole = 'CREATE' | 'EDIT';
 
@@ -46,11 +48,17 @@ export const useCreateAppContext = (): AppContextInitial => {
             token,
             login: data.login,
         };
+        todoApi.setAuth(token);
         setCurrentUser(currentUser);
+        setCookie('userToken', token, { secure: true, 'max-age': 86400 });
     };
 
     //деавторизирует пользователя
-    const logout = () => setCurrentUser(null);
+    const logout = () => {
+        setCurrentUser(null);
+        todoApi.setAuth('');
+        deleteCookie('userToken');
+    };
 
     const modalClose = useCallback(() => setIsModalOpen(false), []);
     const modalOpenCreate = useCallback(() => {

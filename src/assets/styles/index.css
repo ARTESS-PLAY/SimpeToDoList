@@ -27,6 +27,12 @@ body {
     background-attachment: fixed;
 }
 
+@media (max-width: 768px) {
+    body {
+        background-image: url('../img/main_bg_mobile.webp');
+    }
+}
+
 .container {
     width: 100%;
     max-width: 1064px;

@@ -10,10 +10,15 @@ export interface TodoDTO {
 
 class TodoApi {
     private slug = 'http://localhost:3005/api/todos';
+    private auth = '';
 
     public getTodos = async () => {
         const todos = await axios
-            .get<BackEndToDo[]>(this.slug)
+            .get<BackEndToDo[]>(this.slug, {
+                headers: {
+                    Authorization: this.auth,
+                },
+            })
             .then((res) => res.data)
             .catch((e) => console.log(e));
 
@@ -22,7 +27,11 @@ class TodoApi {
 
     public getTodo = async (todoId: string) => {
         const todo = await axios
-            .get<BackEndToDo>(`${this.slug}/${todoId}`)
+            .get<BackEndToDo>(`${this.slug}/${todoId}`, {
+                headers: {
+                    Authorization: this.auth,
+                },
+            })
             .then((res) => res.data)
             .catch((e) => console.log(e));
 
@@ -36,7 +45,11 @@ class TodoApi {
                     createTodo: BackEndToDo;
                 };
                 success: boolean;
-            }>(this.slug, data)
+            }>(this.slug, data, {
+                headers: {
+                    Authorization: this.auth,
+                },
+            })
             .then((res) => res.data)
             .catch((e) => console.log(e));
 
@@ -45,7 +58,11 @@ class TodoApi {
 
     public updateTodo = async (todoId: string, data: TodoDTO) => {
         const res = await axios
-            .patch<{ success: boolean }>(`${this.slug}/${todoId}`, data)
+            .patch<{ success: boolean }>(`${this.slug}/${todoId}`, data, {
+                headers: {
+                    Authorization: this.auth,
+                },
+            })
             .then((res) => res.data)
             .catch((e) => console.log(e));
 
@@ -54,12 +71,18 @@ class TodoApi {
 
     public deleteTodo = async (todoId: string) => {
         const res = await axios
-            .delete(`${this.slug}/${todoId}`)
+            .delete(`${this.slug}/${todoId}`, {
+                headers: {
+                    Authorization: this.auth,
+                },
+            })
             .then((res) => res.data)
             .catch((e) => console.log(e));
 
         return res.success ? res.success : false;
     };
+
+    public setAuth = (token: string) => (this.auth = token);
 }
 
 const todoApi = new TodoApi();

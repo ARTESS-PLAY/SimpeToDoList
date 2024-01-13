@@ -2,10 +2,10 @@
     margin: 20px 0;
     &__button {
         color: white !important;
-        margin-right: 0;
-        margin-left: auto;
-        margin-bottom: 20px;
-        display: flex;
+        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-bottom: 20px !important;
+        display: flex !important;
         border-radius: 20px !important;
         background-color: var(--main-color) !important;
         @media (max-width: 767px) {
@@ -22,4 +22,8 @@
             }
         }
     }
+}
+
+.notFound {
+    color: var(--additional-color-2);
 }

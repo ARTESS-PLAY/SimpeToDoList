@@ -66,6 +66,9 @@ const RegisterForm = () => {
 
         if (!res.success) {
             newValid.server = res.msg;
+            setIsLoading(false);
+            setError(newValid);
+            return;
         }
 
         const token: string = res.token;

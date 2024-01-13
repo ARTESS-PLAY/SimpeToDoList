@@ -22,6 +22,8 @@ class UserApi {
             })
             .then((res) => res.data)
             .catch((e) => console.log(e));
+        console.log(res);
+
         return res;
     };
 }
