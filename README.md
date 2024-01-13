@@ -3,3 +3,4 @@
 В Ветке "frontend" находятся все иходники UI <br/>
 В Ветке "server" находятся все исходники для запуска сервера<br/>
 Чтобы запустился сервер, нужно создать файл serverConfig.json, в той же папке, где лежит serverConfig-sample.json<br/>
+Демо проект: https://testtest-psi-six.vercel.app/
