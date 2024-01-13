@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import UserModel from '../models/User';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import * as config from '../serverConfig.json';
+import { config } from '../serverConfig';
 
 const secretKey = config.secret;
 

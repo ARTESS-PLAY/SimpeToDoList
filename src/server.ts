@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { todoValidator } from './validations/todosValidation';
 import cors from 'cors';
-import config from './serverConfig.json';
+import { config } from './serverConfig';
 import {
     createToDo,
     getAllTodos,

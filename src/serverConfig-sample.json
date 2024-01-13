@@ -1,5 +1,0 @@
-{
-    "port": 3005,
-    "mongodbURL": "mongodb+srv://admin:password@todos.q41cgsb.mongodb.net/?retryWrites=true&w=majority",
-    "secret": "secret"
-}

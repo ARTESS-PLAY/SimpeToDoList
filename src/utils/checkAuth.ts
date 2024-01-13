@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import * as config from '../serverConfig.json';
+import { config } from '../serverConfig';
 /* Функция посредник, которая проверяет авторизацию пользователя */
 
 export interface AuthRequest extends Request {
