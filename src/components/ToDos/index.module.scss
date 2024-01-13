@@ -1,3 +1,25 @@
 .todos {
     margin: 20px 0;
+    &__button {
+        color: white !important;
+        margin-right: 0;
+        margin-left: auto;
+        margin-bottom: 20px;
+        display: flex;
+        border-radius: 20px !important;
+        background-color: var(--main-color) !important;
+        @media (max-width: 767px) {
+            width: 100% !important;
+        }
+        svg {
+            margin-right: 4px;
+            transform: rotate(0);
+            transition: transform 0.3s;
+        }
+        &:hover {
+            svg {
+                transform: rotate(180deg);
+            }
+        }
+    }
 }

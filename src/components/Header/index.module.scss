@@ -32,18 +32,19 @@
             }
         }
     }
+}
 
-    &__button {
-        color: white !important;
-        svg {
-            margin-right: 4px;
-            transform: rotate(0);
-            transition: transform 0.3s;
+.user {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    p {
+        color: white;
+        &:first-child {
+            margin-right: 12px;
         }
-        &:hover {
-            svg {
-                transform: rotate(180deg);
-            }
+        &:last-child {
+            cursor: pointer;
         }
     }
 }
