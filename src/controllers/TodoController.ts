@@ -1,12 +1,14 @@
 import TodoModel from '../models/Todo';
 import { Request, Response } from 'express';
+import { AuthRequest } from '../utils/checkAuth';
 
-export const createToDo = async (req: Request, res: Response) => {
+export const createToDo = async (req: AuthRequest, res: Response) => {
     try {
         const doc = new TodoModel({
             name: req.body.name,
             description: req.body.description,
             status: req.body.status,
+            author: req.userId,
         });
 
         const todo = await doc.save();
@@ -22,29 +24,37 @@ export const createToDo = async (req: Request, res: Response) => {
     }
 };
 
-export const getAllTodos = async (req: Request, res: Response) => {
+export const getAllTodos = async (req: AuthRequest, res: Response) => {
     try {
-        const todos = await TodoModel.find();
+        const todos = await TodoModel.find({
+            author: req.userId,
+        });
         res.json(todos);
     } catch (error) {
         res.status(500).json(error);
     }
 };
 
-export const getTodo = async (req: Request, res: Response) => {
+export const getTodo = async (req: AuthRequest, res: Response) => {
     try {
         const todoId = req.params.id;
-        const todo = await TodoModel.findById(todoId);
+        const todo = await TodoModel.findOne({
+            _id: todoId,
+            author: req.userId,
+        });
         res.json(todo);
     } catch (error) {
         res.status(500).json(error);
     }
 };
 
-export const removeTodo = async (req: Request, res: Response) => {
+export const removeTodo = async (req: AuthRequest, res: Response) => {
     try {
         const todoId = req.params.id;
-        await TodoModel.findByIdAndDelete(todoId);
+        await TodoModel.findOneAndDelete({
+            _id: todoId,
+            author: req.userId,
+        });
 
         res.json({ success: true });
     } catch (error) {
@@ -52,14 +62,20 @@ export const removeTodo = async (req: Request, res: Response) => {
     }
 };
 
-export const updateTodo = async (req: Request, res: Response) => {
+export const updateTodo = async (req: AuthRequest, res: Response) => {
     try {
         const todoId = req.params.id;
-        const todo = await TodoModel.findByIdAndUpdate(todoId, {
-            name: req.body.name,
-            description: req.body.description,
-            status: req.body.status,
-        });
+        const todo = await TodoModel.findOneAndUpdate(
+            {
+                _id: todoId,
+                author: req.userId,
+            },
+            {
+                name: req.body.name,
+                description: req.body.description,
+                status: req.body.status,
+            },
+        );
 
         res.json({ success: true });
     } catch (error) {

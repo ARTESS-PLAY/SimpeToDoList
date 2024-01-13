@@ -13,6 +13,7 @@ import {
 import handleValidationErrors from './utils/handleValidationErrors';
 import { authUser, createUser } from './controllers/UserController';
 import { userValidationLogin } from './validations/userValidation';
+import { checkAuth } from './utils/checkAuth';
 
 /* DATABASE CONNECT */
 
@@ -34,11 +35,11 @@ app.listen(config.port, () => {
 });
 /* CONFIGURATE APP END*/
 
-app.get('/api/todos/', getAllTodos);
-app.get('/api/todos/:id', getTodo);
-app.post('/api/todos/', todoValidator, handleValidationErrors, createToDo);
-app.delete('/api/todos/:id', removeTodo);
-app.patch('/api/todos/:id', todoValidator, handleValidationErrors, updateTodo);
+app.get('/api/todos/', checkAuth, getAllTodos);
+app.get('/api/todos/:id', checkAuth, getTodo);
+app.post('/api/todos/', checkAuth, todoValidator, handleValidationErrors, createToDo);
+app.delete('/api/todos/:id', checkAuth, removeTodo);
+app.patch('/api/todos/:id', checkAuth, todoValidator, handleValidationErrors, updateTodo);
 
 app.post('/api/user/create', userValidationLogin, handleValidationErrors, createUser);
 app.post('/api/user/auth', userValidationLogin, handleValidationErrors, authUser);
