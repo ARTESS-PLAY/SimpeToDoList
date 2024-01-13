@@ -11,6 +11,8 @@ import {
     updateTodo,
 } from './controllers/TodoController';
 import handleValidationErrors from './utils/handleValidationErrors';
+import { authUser, createUser } from './controllers/UserController';
+import { userValidationLogin } from './validations/userValidation';
 
 /* DATABASE CONNECT */
 
@@ -37,3 +39,6 @@ app.get('/api/todos/:id', getTodo);
 app.post('/api/todos/', todoValidator, handleValidationErrors, createToDo);
 app.delete('/api/todos/:id', removeTodo);
 app.patch('/api/todos/:id', todoValidator, handleValidationErrors, updateTodo);
+
+app.post('/api/user/create', userValidationLogin, handleValidationErrors, createUser);
+app.post('/api/user/auth', userValidationLogin, handleValidationErrors, authUser);
